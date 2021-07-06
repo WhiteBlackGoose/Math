@@ -1,0 +1,51 @@
+﻿@page "/"
+
+<style>
+.neat {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 6px;
+    font-size: 14pt;
+}
+
+.submit-button:active {
+    background-color: white;
+}
+
+.submit-button {
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+</style>
+
+<h2>Math expression into LaTeX</h2>
+
+<p>
+Input a math expression and get latex for it.
+</p>
+
+<input class="neat input-box" @bind=@Text style="width: 70%" @onkeypress="args => { if (args.Key[0] is 'E' /*enter*/ ) OutputInfo(); }" />
+
+<button class="neat submit-button" @onclick="OutputInfo">Search</button>
+
+<p>
+    <br>
+    <code class="neat latex-res">
+        @Latex
+    </code>
+</p>
+
+
+@using AngouriMath
+@using AngouriMath.Extensions
+@code {
+    public string Text = "x2 + e^x + sqrt(2) + [[1, 2, 3], [theta, gamma, Omega]]";
+    public string Latex;
+
+    public void OutputInfo()
+    {
+        Latex = Text.Latexise();
+    }
+}
